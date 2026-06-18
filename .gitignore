@@ -1,0 +1,10 @@
+# State files
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+
+# Contains real variables
+terraform.tfvars
+
+# Service account key
+key.json
