@@ -21,6 +21,22 @@ resource "yandex_compute_instance" "web" {
     subnet_id = yandex_vpc_subnet.subnet.id
     nat       = true
   }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install -y nginx",
+      "sudo systemctl enable nginx",
+      "sudo systemctl start nginx"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("~/.ssh/vps_key")
+      host        = self.network_interface[0].nat_ip_address
+    }
+  }  
 }
 
 resource "yandex_vpc_network" "network" {
